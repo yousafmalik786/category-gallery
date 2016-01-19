@@ -7,22 +7,25 @@
     <title>Category - Images</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/lightslider.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
     <script src="js/jquery-2.2.0.min.js" ></script>
     <script src="js/bootstrap.min.js" ></script>
+    <script src="js/lightslider.js" ></script>
 </head>
 <body>
 <div class="container">
 	<ul class="row cat-gallery">
-		<li class="col-xs-12 col-md-6 col-lg-4">
+		<li class="col-xs-12 col-md-6 col-lg-4" cat-id="1">
 			<img src="images/category-01/image_01.jpg"/>
 			<h3 class="cat-heading">Animals</h3>
 		</li>
-		<li class="col-xs-12 col-md-6 col-lg-4">
+		<li class="col-xs-12 col-md-6 col-lg-4" cat-id="2">
 			<img src="images/category-02/image_01.jpg"/>
 			<h3 class="cat-heading">Flowers</h3>
 		</li>
-		<li class="col-xs-12 col-md-6 col-lg-4">
+		<li class="col-xs-12 col-md-6 col-lg-4" cat-id="3">
 			<img src="images/category-03/image_01.jpg"/>
 			<h3 class="cat-heading">Birds</h3>
 		</li>
@@ -31,3 +34,65 @@
 </div>
 </body>
 </html>
+<script type="text/javascript">
+
+  $('.cat-gallery li').on('click',function(){
+    var catId = $(this).attr('cat-id');
+    //send ajax request and get images for this category
+
+    //fill model window with category images.
+    var ajaxResponse = '{"category_images":["images/category-01/image_01.jpg","images/category-01/image_02.jpg","images/category-01/image_03.jpg"]}';
+    var categoryImages = JSON.parse(ajaxResponse);
+    categoryImages = categoryImages.category_images;
+    var sliderHtml = "<ul id='lightSlider'>";
+    if(categoryImages.length > 0){
+      for(var i in categoryImages){
+        var imageNumber = i + 1;
+        sliderHtml += "<li data-thumb='"+categoryImages[i]+"'><img src='"+categoryImages[i]+"' /></li>";
+      }
+    }
+    sliderHtml += "</url>";
+    //trigger model window
+    $("#myModal").modal();
+    //show lightSlider when Modal is to show.
+    $('#myModal').on('shown.bs.modal', function() {
+      $('.cat-slider').html(sliderHtml);
+      window.slider = $('#lightSlider').lightSlider({
+        gallery: true,
+        item: 1,
+        loop:true,
+        slideMargin: 0,
+        thumbItem: 3
+      });
+
+    });
+    //destroy ligtSlider on Model close.
+    $('#myModal').on('hidden.bs.modal', function() {
+      if(typeof window.slider != 'undefined'){
+        window.slider.destroy();
+      }
+    });
+  });
+
+  function resizeImage(){
+    //inputs
+    var width = ('#widthInput').val();
+    var height = ('$heightInput').val();
+
+  }
+</script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="cat-slider">
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -19,3 +19,8 @@ ul.cat-gallery{
 .cat-heading{
 	text-align: center;
 }
+#lightSlider img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
