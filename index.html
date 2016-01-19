@@ -106,8 +106,8 @@
 
   function resizeImage(){
     var width = $('#widthInput').val();
-    if(width < 1){
-      alert('Please enter value greater then zero');
+    if(width < 200 || width > 1024){
+      alert('Values only allowed between 200 and 1024');
       $('#widthInput').focus();
       return false;
     }
