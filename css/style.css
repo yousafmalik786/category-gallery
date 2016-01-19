@@ -1,0 +1,21 @@
+ul {
+	margin: 0;
+	padding: 0
+}
+ul li {
+	list-style: none;
+}
+ul.cat-gallery{
+	margin-top: 50px;
+}
+.cat-gallery > li{
+	margin-bottom: 24px;
+	cursor: pointer;
+}
+.cat-gallery > li > img{
+	width: 100%;
+	overflow: hidden; 
+}
+.cat-heading{
+	text-align: center;
+}
