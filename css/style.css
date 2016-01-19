@@ -5,8 +5,11 @@ ul {
 ul li {
 	list-style: none;
 }
+.main-heading{
+    margin-top: 34px;
+}
 ul.cat-gallery{
-	margin-top: 50px;
+	margin-top: 22px;
 }
 .cat-gallery > li{
 	margin-bottom: 24px;
