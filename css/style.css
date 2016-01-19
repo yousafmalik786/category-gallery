@@ -24,3 +24,27 @@ ul.cat-gallery{
     height: auto;
     max-width: 100%;
 }
+.lSGallery li.active { border: 2px solid #ff6135;}
+.lSGallery a { outline: 0; }
+
+/*ajax loader*/
+.loader {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -70px;
+    position: relative;
+    top: 50%;
+}
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    color: white;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+}

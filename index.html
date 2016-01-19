@@ -11,6 +11,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="js/jquery-2.2.0.min.js" ></script>
+    <script src="js/jquery.mockjax.js" ></script>
     <script src="js/bootstrap.min.js" ></script>
     <script src="js/lightslider.js" ></script>
 </head>
@@ -32,46 +33,64 @@
 		
 	</ul>
 </div>
+<div class="overlay" id="loading" style="display: none;">
+  <img width="70" height="70" class="loader" src="images/ajax-loader.gif">
+</div>
 </body>
 </html>
 <script type="text/javascript">
+  //define mockajx route for specific category
+  function mockAjaxUrl(id){
+    $.mockjax({
+      url: "/category/"+id,
+      responseText: '{"category_images":["images/category-0'+id+'/image_01.jpg","images/category-0'+id+'/image_02.jpg","images/category-0'+id+'/image_03.jpg"]}'
+
+    });
+  }
 
   $('.cat-gallery li').on('click',function(){
+    $('#loading').show();
     var catId = $(this).attr('cat-id');
+    //create mockajax route for this category
+    mockAjaxUrl(catId);
     //send ajax request and get images for this category
-
-    //fill model window with category images.
-    var ajaxResponse = '{"category_images":["images/category-01/image_01.jpg","images/category-01/image_02.jpg","images/category-01/image_03.jpg"]}';
-    var categoryImages = JSON.parse(ajaxResponse);
-    categoryImages = categoryImages.category_images;
-    var sliderHtml = "<ul id='lightSlider'>";
-    if(categoryImages.length > 0){
-      for(var i in categoryImages){
-        var imageNumber = i + 1;
-        sliderHtml += "<li data-thumb='"+categoryImages[i]+"'><img src='"+categoryImages[i]+"' /></li>";
+    $.ajax({
+      url :'/category/'+catId,
+      type: 'GET',
+      success : function(response){
+        var response = JSON.parse(response);
+        var categoryImages = response.category_images;
+        var sliderHtml = "<ul id='lightSlider'>";
+        if(categoryImages.length > 0){
+          for(var i in categoryImages){
+            var imageNumber = i + 1;
+            sliderHtml += "<li data-thumb='"+categoryImages[i]+"'><img src='"+categoryImages[i]+"' /></li>";
+          }
+        }
+        sliderHtml += "</url>";
+        //trigger model window
+        $("#myModal").modal();
+        //show lightSlider when Modal is to show.
+        $('#myModal').on('shown.bs.modal', function() {
+          $('.cat-slider').html(sliderHtml);
+          window.slider = $('#lightSlider').lightSlider({
+            gallery: true,
+            item: 1,
+            loop:true,
+            slideMargin: 0,
+            thumbItem: 3
+          });
+          $('#loading').hide();
+        });
+        //destroy ligtSlider on Model close.
+        $('#myModal').on('hidden.bs.modal', function() {
+          if(typeof window.slider != 'undefined'){
+            window.slider.destroy();
+          }
+        });
       }
-    }
-    sliderHtml += "</url>";
-    //trigger model window
-    $("#myModal").modal();
-    //show lightSlider when Modal is to show.
-    $('#myModal').on('shown.bs.modal', function() {
-      $('.cat-slider').html(sliderHtml);
-      window.slider = $('#lightSlider').lightSlider({
-        gallery: true,
-        item: 1,
-        loop:true,
-        slideMargin: 0,
-        thumbItem: 3
-      });
+    });
 
-    });
-    //destroy ligtSlider on Model close.
-    $('#myModal').on('hidden.bs.modal', function() {
-      if(typeof window.slider != 'undefined'){
-        window.slider.destroy();
-      }
-    });
   });
 
   function resizeImage(){
