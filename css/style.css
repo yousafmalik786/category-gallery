@@ -33,7 +33,10 @@ ul.cat-gallery{
 .lSGallery a {
     outline: 0;
 }
-
+.imageInput {
+    margin-top: 9px;
+    text-align: center;
+}
 /*ajax loader*/
 .loader {
     display: block;

@@ -89,17 +89,31 @@
           if(typeof window.slider != 'undefined'){
             window.slider.destroy();
           }
+          //set default modal width
+          $('.modal-dialog').css('width','600');
+          $('#widthInput').val(570);
+
+
         });
+      },
+      error: function (xhr, status, error) {
+        $('#loading').hide();
+        console.log(error);
       }
     });
 
   });
 
   function resizeImage(){
-    //inputs
-    var width = ('#widthInput').val();
-    var height = ('$heightInput').val();
-
+    var width = $('#widthInput').val();
+    if(width < 1){
+      alert('Please enter value greater then zero');
+      $('#widthInput').focus();
+      return false;
+    }
+    modalNewWidth = parseInt(width)+30;
+    $('.modal-dialog').css('width',modalNewWidth);
+    window.slider.refresh();
   }
 </script>
 
@@ -110,6 +124,11 @@
       <div class="modal-body">
         <div class="cat-slider">
 
+        </div>
+        <div class="imageInput">
+          <label for="">Set Image Width</label>
+          <input type="text" value="570" id="widthInput" />
+          <button id="updateImgWidth" value="Update" onclick="resizeImage()" >Update</button>
         </div>
       </div>
 
