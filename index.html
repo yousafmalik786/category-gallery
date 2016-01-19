@@ -66,14 +66,13 @@
         var sliderHtml = "<ul id='lightSlider'>";
         if(categoryImages.length > 0){
           for(var i in categoryImages){
-            var imageNumber = i + 1;
             sliderHtml += "<li data-thumb='"+categoryImages[i]+"'><img src='"+categoryImages[i]+"' /></li>";
           }
         }
         sliderHtml += "</url>";
-        //trigger model window
+        //trigger modal window
         $("#myModal").modal();
-        //show lightSlider when Modal is to show.
+        //show lightSlider when Modal is ready.
         $('#myModal').on('shown.bs.modal', function() {
           $('.cat-slider').html(sliderHtml);
           window.slider = $('#lightSlider').lightSlider({

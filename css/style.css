@@ -17,7 +17,7 @@ ul.cat-gallery{
 }
 .cat-gallery > li > img{
 	width: 100%;
-	overflow: hidden; 
+	overflow: hidden;
 }
 .cat-heading{
 	text-align: center;
@@ -27,8 +27,12 @@ ul.cat-gallery{
     height: auto;
     max-width: 100%;
 }
-.lSGallery li.active { border: 2px solid #ff6135;}
-.lSGallery a { outline: 0; }
+.lSGallery li.active {
+    border: 2px solid #ff6135;
+}
+.lSGallery a {
+    outline: 0;
+}
 
 /*ajax loader*/
 .loader {
